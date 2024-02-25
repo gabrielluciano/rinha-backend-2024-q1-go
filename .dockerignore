@@ -1,0 +1,8 @@
+init.sql
+postgresql.conf
+nginx.conf
+Dockerfile
+docker-compose.dev.yml
+.git
+.gitignore
+.vscode

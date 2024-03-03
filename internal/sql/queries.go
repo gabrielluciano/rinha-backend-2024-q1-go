@@ -9,4 +9,4 @@ const EXTRATO = `
     LIMIT 10;
 `
 
-const CLIENTE = "SELECT saldo, limite FROM clientes WHERE id = $1"
+const CLIENTE = "SELECT saldo, limite, current_timestamp FROM clientes WHERE id = $1"

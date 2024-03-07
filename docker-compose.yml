@@ -9,6 +9,13 @@ services:
       - HTTP_PORT=8080
       - DATABASE_URL=postgresql://go:secret@127.0.0.1:5432/rinha?pool_min_conns=25&pool_max_conns=25
     network_mode: "host"
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://127.0.0.1:8080/health"]
+      interval: 10m
+      timeout: 5s
+      start_period: 15s
+      start_interval: 3s
+      retries: 5
     deploy:
       resources:
         limits:
@@ -21,14 +28,23 @@ services:
     environment:
       - HTTP_PORT=8081
       - DATABASE_URL=postgresql://go:secret@127.0.0.1:5432/rinha?pool_min_conns=25&pool_max_conns=25
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://127.0.0.1:8081/health"]
+      interval: 10m
+      timeout: 5s
+      start_period: 15s
+      start_interval: 3s
+      retries: 5
 
   nginx:
     image: nginx:1.25.3
     volumes:
       - ./nginx.conf:/etc/nginx/nginx.conf:ro
     depends_on:
-      - api1
-      - api2
+      api1:
+        condition: service_healthy
+      api2:
+        condition: service_healthy
     network_mode: "host"
     deploy:
       resources:

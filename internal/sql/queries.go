@@ -10,3 +10,9 @@ const EXTRATO = `
 `
 
 const CLIENTE = "SELECT saldo, limite, current_timestamp FROM clientes WHERE id = $1"
+
+const RESET_SALDOS = "UPDATE clientes SET saldo = 0"
+
+const DELETE_TRANSACOES = "DELETE FROM transacoes"
+
+const RESET_TRANSACOES_SEQ = "ALTER SEQUENCE transacoes_id_seq RESTART WITH 1"
